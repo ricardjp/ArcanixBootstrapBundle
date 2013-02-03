@@ -1,0 +1,31 @@
+services:
+    arcanix_bootstrap.form.help_extension:
+           class: Arcanix\ArcanixBootstrapBundle\Form\Extension\HelpFormTypeExtension
+           tags:
+                - { name: form.type_extension, alias: form }
+
+    arcanix_bootstrap.form.legend_extension:
+           class: Arcanix\ArcanixBootstrapBundle\Form\Extension\LegendFormTypeExtension
+           arguments:
+                - { render_fieldset: %arcanix_bootstrap.form.render_fieldset%, show_legend: %arcanix_bootstrap.form.show_legend%, show_child_legend: %arcanix_bootstrap.form.show_child_legend%, render_required_asterisk: %arcanix_bootstrap.form.render_required_asterisk%, render_optional_text: %arcanix_bootstrap.form.render_optional_text% }
+           tags:
+                - { name: form.type_extension, alias: form }
+
+    arcanix_bootstrap.form.error_type_extension:
+           class: Arcanix\ArcanixBootstrapBundle\Form\Extension\ErrorTypeFormTypeExtension
+           arguments:
+                - { error_type: %arcanix_bootstrap.form.error_type% }
+           tags:
+                - { name: form.type_extension, alias: form }
+
+    arcanix_bootstrap.form.widget_extension:
+           class: Arcanix\ArcanixBootstrapBundle\Form\Extension\WidgetFormTypeExtension
+           tags:
+                - { name: form.type_extension, alias: form }
+
+    arcanix_bootstrap.form.widget_collection_extension:
+           class: Arcanix\ArcanixBootstrapBundle\Form\Extension\WidgetCollectionFormTypeExtension
+           arguments:
+                - { widget_add_btn: %arcanix_bootstrap.form.collection.widget_add_btn%, widget_remove_btn: %arcanix_bootstrap.form.collection.widget_remove_btn% }
+           tags:
+                - { name: form.type_extension, alias: form }
