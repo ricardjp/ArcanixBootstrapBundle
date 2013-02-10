@@ -48,6 +48,7 @@ class RegisterAssetsPass implements CompilerPassInterface {
 		$formulae["bootstrap_less"] = $bootstrapLess;
 		$formulae["bootstrap_responsive_less"] = $bootstrapResponsiveLess;
 		
+		
 		$container->getDefinition("assetic.filter.lessphp")->setFile($kernelRootDir . "/../vendor/leafo/lessphp/lessc.inc.php");
 		
 
