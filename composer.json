@@ -1,0 +1,16 @@
+{
+    "name": "arcanix/bootstrap-bundle",
+    "type": "symfony-bundle",
+    "description": "Twitter Bootstrap Symfony 2 bundle",
+    "autoload": {
+        "psr-0": { "Arcanix\\ArcanixBootstrapBundle": "" }
+    },
+    "target-dir": "Arcanix/ArcanixBootstrapBundle",
+    "require": {
+        "symfony/symfony": ">=2.1,<2.3-dev",
+        "symfony/assetic-bundle": "2.1.*",
+        "twitter/bootstrap": "2.2.2",
+        "sonata-project/jquery-bundle": "1.8.*@dev",
+        "leafo/lessphp": "0.3.8"
+    }
+}
