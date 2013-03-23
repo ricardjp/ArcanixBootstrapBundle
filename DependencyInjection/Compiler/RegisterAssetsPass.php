@@ -13,7 +13,7 @@ class RegisterAssetsPass implements CompilerPassInterface {
     public function process(ContainerBuilder $container) {
         $kernelRootDir = $container->getParameter("kernel.root_dir");
 
-        $bootstrapJsDir = $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js";
+        $bootstrapJsDir = $kernelRootDir . "/../vendor/twitter/bootstrap/js";
         
         $bootstrapJsFinder = new Finder();
         $bootstrapJsFinder->files()->in($bootstrapJsDir)->name("*.js");
@@ -51,13 +51,13 @@ class RegisterAssetsPass implements CompilerPassInterface {
         );*/
 
         $bootstrapLess = array(
-            array($kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/less/bootstrap.less"),
+            array($kernelRootDir . "/../vendor/twitter/bootstrap/less/bootstrap.less"),
             array("lessphp"),
             array()
         );
 
         $bootstrapResponsiveLess = array(
-            array($kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/less/responsive.less"),
+            array($kernelRootDir . "/../vendor/twitter/bootstrap/less/responsive.less"),
             array("lessphp"),
             array(),
         );
