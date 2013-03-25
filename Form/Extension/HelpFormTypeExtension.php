@@ -1,5 +1,5 @@
 <?php
-namespace Arcanix\ArcanixBootstrapBundle\Form\Extension;
+namespace Arcanix\BootstrapBundle\Form\Extension;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;

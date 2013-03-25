@@ -1,6 +1,6 @@
 <?php
 
-namespace Arcanix\ArcanixBootstrapBundle\DependencyInjection\Compiler;
+namespace Arcanix\BootstrapBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
@@ -8,64 +8,53 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @author Jean-Philippe Ricard <ricardjp@arcanix.com>
+ */
 class RegisterAssetsPass implements CompilerPassInterface {
 
+    const JQUERY_PATH = "sonata-project/jquery-bundle/Sonata/jQueryBundle/Resources/public";
+    const BOOTSTRAP_PATH = "twitter/bootstrap";
+    
     public function process(ContainerBuilder $container) {
         $kernelRootDir = $container->getParameter("kernel.root_dir");
 
-        $bootstrapJsDir = $kernelRootDir . "/../vendor/twitter/bootstrap/js";
+        $jqueryDir = $kernelRootDir . "/../vendor/" . static::JQUERY_PATH;
+        
+        // use a finder, easier to maintain on a new jquery version
+        $finder = new Finder();
+        $finder->files()->in($jqueryDir)->name("jquery-*.js")->notName("*ui*");
+        
+        $jQueryJs = AssetConfiguration::create("jquery")
+                ->setFinder($finder)
+                ->setOutput("js/query.js");
+        
+        $bootstrapJsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/js";
         
         $bootstrapJsFinder = new Finder();
         $bootstrapJsFinder->files()->in($bootstrapJsDir)->name("*.js");
+        $bootstrapJs = AssetConfiguration::create("bootstrap_js")
+            ->setFinder($bootstrapJsFinder)
+            ->setOutput("js/bootstrap.js");
         
-        $bootstrapJsFiles = array();
-        foreach ($bootstrapJsFinder as $bootstrapJsFile) {
-            $bootstrapJsFiles[] = $bootstrapJsFile->getRealPath();
-        }
+        $bootstrapIconsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/img";
+        $bootstrapIcons = AssetConfiguration::create("bootstrap_icons")
+            ->addInput($bootstrapIconsDir . "/glyphicons-halflings.png")
+            ->setOutput("img/glyphicons-halflings.png");
         
-        $bootstrapJs = array(
-            $bootstrapJsFiles,
-            array(),
-            array(),
-        );
-        
-        // assets
-        /*$bootstrapJs = array(
-            array(
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-transition.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-alert.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-modal.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-dropdown.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-scrollspy.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-tab.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-tooltip.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-popover.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-button.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-collapse.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-carousel.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-typeahead.js",
-                $kernelRootDir . "/../vendor/twitter/bootstrap/twitter/bootstrap/js/bootstrap-affix.js",
-            ),
-            array(),
-            array(),
-        );*/
+        $bootstrapIconsWhite = AssetConfiguration::create("bootstrap_icons_white")
+            ->addInput($bootstrapIconsDir . "/glyphicons-halflings-white.png")
+            ->setOutput("img/glyphicons-halflings-white.png");
 
-        $bootstrapLess = array(
-            array($kernelRootDir . "/../vendor/twitter/bootstrap/less/bootstrap.less"),
-            array("lessphp"),
-            array()
-        );
+        $bootstrapLess = AssetConfiguration::create("bootstrap_less")
+            ->addInput($kernelRootDir . "/../vendor/twitter/bootstrap/less/bootstrap.less")
+            ->addFilter("lessphp")
+            ->setOutput("css/bootstrap.css");
 
-        $bootstrapResponsiveLess = array(
-            array($kernelRootDir . "/../vendor/twitter/bootstrap/less/responsive.less"),
-            array("lessphp"),
-            array(),
-        );
-
-        $formulae["bootstrap_js"] = $bootstrapJs;
-        $formulae["bootstrap_less"] = $bootstrapLess;
-        $formulae["bootstrap_responsive_less"] = $bootstrapResponsiveLess;
-
+        $bootstrapResponsiveLess = AssetConfiguration::create("bootstrap_responsive_less")
+            ->addInput($kernelRootDir . "/../vendor/twitter/bootstrap/less/responsive.less")
+            ->addFilter("lessphp")
+            ->setOutput("css/bootstrap-responsive.css");
 
         $container->getDefinition("assetic.filter.lessphp")->setFile($kernelRootDir . "/../vendor/leafo/lessphp/lessc.inc.php");
 
@@ -77,12 +66,24 @@ class RegisterAssetsPass implements CompilerPassInterface {
 
         $container->setDefinition('assetic.filter.lessphp.worker0', $worker);
 
-        $am = $container->getDefinition("assetic.asset_manager");
-        $am->addMethodCall('setFormula', array("bootstrap_js", $formulae["bootstrap_js"]));
-        $am->addMethodCall('setFormula', array("bootstrap_less", $formulae["bootstrap_less"]));
-        $am->addMethodCall('setFormula', array("bootstrap_responsive_less", $formulae["bootstrap_responsive_less"]));
+        $assetManager = $container->getDefinition("assetic.asset_manager");
+        
+        // registering assets
+        $this->register($assetManager, $jQueryJs);
+        $this->register($assetManager, $bootstrapJs);
+        $this->register($assetManager, $bootstrapIcons);
+        $this->register($assetManager, $bootstrapIconsWhite);
+        $this->register($assetManager, $bootstrapLess);
+        $this->register($assetManager, $bootstrapResponsiveLess);
 
+        // registering form fields
         $container->setParameter('twig.form.resources', array('ArcanixBootstrapBundle:Form:fields.html.twig'));
+    }
+    
+    private function register($assetManager, AssetConfiguration $assetConfiguration) {
+        $assetManager->addMethodCall("setFormula", array(
+            $assetConfiguration->getId(),
+            $assetConfiguration->convertForRegistration()));
     }
 
 }

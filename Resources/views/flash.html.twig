@@ -1,17 +1,39 @@
-{% macro flash(type, message, close, use_raw, class, domain) %}
+{#
+This template originally appears in the MopaBootstrapBundle available at:
+https://github.com/phiamo/MopaBootstrapBundle
+
+Copyright (c) 2011 Mohrenweiser & Partner, Philipp A. Mohrenweiser
+                 - http://www.mohrenweiserpartner.de
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+#}
+
+{% macro flash(type, message, close, class, domain) %}
     <div class="alert{{ type ? ' alert-'~type : '' }} fade in {{ class|default('') }}">
     {% if close|default(false) %}
         <a class="close" data-dismiss="alert" href="#">×</a>
     {% endif %}
-    {% if use_raw|default(false) %}
-        {{ message|trans({}, domain|default('messages'))|raw }}
-    {% else %}
-        {{ message|trans({}, domain|default('messages')) }}
-    {% endif %}
+    {{ message|trans({}, domain|default('messages'))|raw }}
     </div>
 {% endmacro %}
 
-{% macro advanced_flash(type, heading, message, close_tag, use_raw, class, domain) %}
+{% macro advanced_flash(type, heading, message, close_tag, class, domain) %}
     <div class="alert{{ type ? ' alert-'~type : '' }} alert-block fade in {{ class|default('') }}">
     {% if close_tag|default(false) %}
         {% if close_tag == true %}
@@ -22,25 +44,17 @@
     {% if heading|default(false) %}
     <h4 class="alert-heading">{{ heading }}</h4>
     {% endif %}
-    {% if use_raw|default(false) %}
-        {{ message|trans({}, domain|default('messages'))|raw }}
-    {% else %}
-        {{ message|trans({}, domain|default('messages')) }}
-    {% endif %}
+    {{ message|trans({}, domain|default('messages'))|raw }}
     </div>
 {% endmacro %}
 
-{% macro session_flash(close, use_raw, class, domain) %}
+{% macro session_flash(close, class, domain) %}
     {% import _self as flash_messages %}
 
     {% if app.session.flashbag.peekAll|length > 0 %}
         {% for type, messages in app.session.flashbag.all %}
             {% for message in messages %}
-                {% if type == 'fos_user_success' %}
-                    {% set type = 'success' %}
-                    {% set domain = 'FOSUserBundle' %}
-                {% endif %}
-                {{ flash_messages.flash(type, message, close, use_raw, class, domain) }}
+                {{ flash_messages.flash(type, message, close, class, domain) }}
             {% endfor %}
         {% endfor %}
     {% endif %}

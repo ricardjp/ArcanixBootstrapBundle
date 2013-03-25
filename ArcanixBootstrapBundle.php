@@ -1,8 +1,8 @@
 <?php
 
-namespace Arcanix\ArcanixBootstrapBundle;
+namespace Arcanix\BootstrapBundle;
 
-use Arcanix\ArcanixBootstrapBundle\DependencyInjection\Compiler\RegisterAssetsPass;
+use Arcanix\BootstrapBundle\DependencyInjection\Compiler\RegisterAssetsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
