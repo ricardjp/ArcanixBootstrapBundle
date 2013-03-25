@@ -1,5 +1,7 @@
 {% from 'ArcanixBootstrapBundle::flash.html.twig' import session_flash %}
-{% form_theme form 'ArcanixBootstrapBundle:Form:fields.html.twig' %}
+{% if form is defined %}
+    {% form_theme form 'ArcanixBootstrapBundle:Form:fields.html.twig' %}
+{% endif %}
 {% block doctype %}<!DOCTYPE html>{%  endblock %}
 <html>
     {% block head %}
