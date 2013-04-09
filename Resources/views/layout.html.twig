@@ -43,15 +43,17 @@
                 
 	    {% block page_footer %}{% endblock %}
             
-            {# add jquery #}
-            {% javascripts '@jquery' output="js/jquery.js" combine=true %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+	    {% block foot_script %}
+	            {# add jquery #}
+	            {% javascripts '@jquery' output="js/jquery.js" combine=true %}
+	                <script src="{{ asset_url }}"></script>
+	            {% endjavascripts %}
                 
-            {# add bootstrap scripts #}
-            {% javascripts '@bootstrap_js' output="js/bootstrap.js" combine=true %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+	            {# add bootstrap scripts #}
+	            {% javascripts '@bootstrap_js' output="js/bootstrap.js" combine=true %}
+	                <script src="{{ asset_url }}"></script>
+	            {% endjavascripts %}
+	    {% endblock %}
                 
 	  </body>
     {% endblock %}
