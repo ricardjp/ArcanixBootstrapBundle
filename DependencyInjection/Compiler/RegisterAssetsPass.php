@@ -48,7 +48,7 @@ class RegisterAssetsPass implements CompilerPassInterface {
         $bootstrapJsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/js";
         
         $bootstrapJsFinder = new Finder();
-        $bootstrapJsFinder->files()->in($bootstrapJsDir)->name("*.js");
+        $bootstrapJsFinder->files()->in($bootstrapJsDir)->name("*.js")->exclude("tests");
         $bootstrapJs = AssetConfiguration::create("bootstrap_js")
             ->setFinder($bootstrapJsFinder)
             ->setOutput("js/bootstrap.js");
