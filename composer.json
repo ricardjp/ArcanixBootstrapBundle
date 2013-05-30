@@ -8,7 +8,7 @@
     "target-dir": "Arcanix/BootstrapBundle",
     "require": {
         "symfony/symfony": "2.1.*",
-        "symfony/assetic-bundle": "2.1.*",
+        "symfony/assetic-bundle": "2.3.*",
         "kriswallsmith/assetic": "1.1.*@dev",
         "twitter/bootstrap": "2.3.*",
         "sonata-project/jquery-bundle": "1.9.*",
