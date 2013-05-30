@@ -47,10 +47,20 @@ class RegisterAssetsPass implements CompilerPassInterface {
         
         $bootstrapJsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/js";
         
-        $bootstrapJsFinder = new Finder();
-        $bootstrapJsFinder->files()->in($bootstrapJsDir)->name("*.js")->exclude("tests");
         $bootstrapJs = AssetConfiguration::create("bootstrap_js")
-            ->setFinder($bootstrapJsFinder)
+            ->addInput($bootstrapJsDir . "/bootstrap-affix.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-alert.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-button.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-carousel.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-collapse.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-dropdown.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-modal.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-tooltip.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-popover.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-scrollspy.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-tab.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-transition.js")
+	    ->addInput($bootstrapJsDir . "/bootstrap-typeahead.js")
             ->setOutput("js/bootstrap.js");
         
         $bootstrapIconsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/img";
