@@ -7,10 +7,14 @@ This bundle is compatible with Symfony 2.1.*.
 
 This bundle is based on the MopaBootstrapBundle.
 
+The goal of this bundle was to allow very easy usage of all Bootstrap features in a Symfony bundle without any configuration headache.
+
+
 Includes
 * Twitter Bootstrap version 2.3.1
 * jQuery via SonatajQueryBundle (https://github.com/sonata-project/SonatajQueryBundle)
-* Less assets are already configured on bundle loading using lessphp
+* Less assets are already configured on bundle
+* Less compiler provided via the lessphp library to prevent the need to install Node.js.
 * Bootstrap icons are available out the box without any need for voodoo magic
 * Form extensions from the MopaBootstrapBundle
 

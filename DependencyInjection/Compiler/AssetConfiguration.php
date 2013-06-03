@@ -20,6 +20,9 @@ namespace Arcanix\BootstrapBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @author Jean-Philippe Ricard <ricardjp@arcanix.com>
+ */
 final class AssetConfiguration {
 
     private $id;
