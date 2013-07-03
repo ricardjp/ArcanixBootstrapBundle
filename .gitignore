@@ -15,3 +15,6 @@ app/config/parameters.yml
 vendor
 composer.lock
 composer.phar
+
+# eclipse files
+.project
