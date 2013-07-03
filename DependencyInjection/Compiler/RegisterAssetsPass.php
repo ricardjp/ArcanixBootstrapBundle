@@ -31,43 +31,54 @@ class RegisterAssetsPass implements CompilerPassInterface {
 
     const JQUERY_PATH = "sonata-project/jquery-bundle/Sonata/jQueryBundle/Resources/public";
     const BOOTSTRAP_PATH = "twitter/bootstrap";
-    
+
     public function process(ContainerBuilder $container) {
         $kernelRootDir = $container->getParameter("kernel.root_dir");
 
         $jqueryDir = $kernelRootDir . "/../vendor/" . static::JQUERY_PATH;
-        
+
         // use a finder, easier to maintain on a new jquery version
         $finder = new Finder();
         $finder->files()->in($jqueryDir)->name("jquery-*.js")->notName("*ui*");
-        
         $jQueryJs = AssetConfiguration::create("jquery")
-                ->setFinder($finder)
-                ->setOutput("js/query.js");
-        
+			->setFinder($finder)
+			->setOutput("js/query.js");
+
+        $finder = new Finder();
+        $finder->files()->in($jqueryDir)->name("jquery-ui-*.js")->notName("*i18n*");
+        $jQueryUIJs = AssetConfiguration::create("jquery-ui")
+        	->setFinder($finder)
+        	->setOutput("js/query-ui.js");
+
+        $finder = new Finder();
+        $finder->files()->in($jqueryDir)->name("jquery-ui-i18n.js");
+        $jQueryUIi18nJs = AssetConfiguration::create("jquery-ui-i18n")
+        	->setFinder($finder)
+        	->setOutput("js/query-ui-i18n.js");
+
         $bootstrapJsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/js";
-        
+
         $bootstrapJs = AssetConfiguration::create("bootstrap_js")
-            ->addInput($bootstrapJsDir . "/bootstrap-affix.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-alert.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-button.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-carousel.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-collapse.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-dropdown.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-modal.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-tooltip.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-popover.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-scrollspy.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-tab.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-transition.js")
-	    ->addInput($bootstrapJsDir . "/bootstrap-typeahead.js")
+			->addInput($bootstrapJsDir . "/bootstrap-affix.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-alert.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-button.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-carousel.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-collapse.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-dropdown.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-modal.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-tooltip.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-popover.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-scrollspy.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-tab.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-transition.js")
+	    	->addInput($bootstrapJsDir . "/bootstrap-typeahead.js")
             ->setOutput("js/bootstrap.js");
-        
+
         $bootstrapIconsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/img";
         $bootstrapIcons = AssetConfiguration::create("bootstrap_icons")
             ->addInput($bootstrapIconsDir . "/glyphicons-halflings.png")
             ->setOutput("img/glyphicons-halflings.png");
-        
+
         $bootstrapIconsWhite = AssetConfiguration::create("bootstrap_icons_white")
             ->addInput($bootstrapIconsDir . "/glyphicons-halflings-white.png")
             ->setOutput("img/glyphicons-halflings-white.png");
@@ -93,9 +104,11 @@ class RegisterAssetsPass implements CompilerPassInterface {
         $container->setDefinition('assetic.filter.lessphp.worker0', $worker);
 
         $assetManager = $container->getDefinition("assetic.asset_manager");
-        
+
         // registering assets
         $this->register($assetManager, $jQueryJs);
+        $this->register($assetManager, $jQueryUIJs);
+        $this->register($assetManager, $jQueryUIi18nJs);
         $this->register($assetManager, $bootstrapJs);
         $this->register($assetManager, $bootstrapIcons);
         $this->register($assetManager, $bootstrapIconsWhite);
@@ -105,7 +118,7 @@ class RegisterAssetsPass implements CompilerPassInterface {
         // registering form fields
         $container->setParameter('twig.form.resources', array('ArcanixBootstrapBundle:Form:fields.html.twig'));
     }
-    
+
     private function register($assetManager, AssetConfiguration $assetConfiguration) {
         $assetManager->addMethodCall("setFormula", array(
             $assetConfiguration->getId(),
