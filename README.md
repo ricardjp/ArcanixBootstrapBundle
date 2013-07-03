@@ -3,7 +3,7 @@ ArcanixBootstrapBundle
 
 Minimal configuration Symfony 2 bundle for Twitter Bootstrap
 
-This bundle is compatible with Symfony 2.1.*.
+This bundle is compatible with Symfony 2.3.*.
 
 This bundle is based on the MopaBootstrapBundle.
 
@@ -11,7 +11,7 @@ The goal of this bundle was to allow very easy usage of all Bootstrap features i
 
 
 Includes
-* Twitter Bootstrap version 2.3.1
+* Twitter Bootstrap version 2.3.2
 * jQuery via SonatajQueryBundle (https://github.com/sonata-project/SonatajQueryBundle)
 * Less assets are already configured on bundle
 * Less compiler provided via the lessphp library to prevent the need to install Node.js.
