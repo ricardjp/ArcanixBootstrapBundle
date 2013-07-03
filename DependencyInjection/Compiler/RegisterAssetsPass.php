@@ -51,8 +51,8 @@ class RegisterAssetsPass implements CompilerPassInterface {
         	->setOutput("js/query-ui.js");
 
         $finder = new Finder();
-        $finder->files()->in($jqueryDir)->name("jqueryuii18n.js");
-        $jQueryUIi18nJs = AssetConfiguration::create("jquery-ui-i18n")
+        $finder->files()->in($jqueryDir)->name("jquery-ui-i18n.js");
+        $jQueryUIi18nJs = AssetConfiguration::create("jqueryuii18n")
         	->setFinder($finder)
         	->setOutput("js/query-ui-i18n.js");
 
