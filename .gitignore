@@ -17,4 +17,5 @@ composer.lock
 composer.phar
 
 # eclipse files
+.settings
 .project
