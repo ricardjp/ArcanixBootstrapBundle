@@ -555,7 +555,7 @@ THE SOFTWARE.
         {# Add Error Class to Widget Wrapper#}
         {% set widget_form_group_attr = widget_form_group_attr|merge({'class': widget_form_group_attr.class|default('') ~ ' has-error'}) %}
     {% endif %}
-    <div{% if help_widget_popover.title is not sameas(null) %}{{ block('help_widget_popover') }}{% endif %} {% for attrname,attrvalue in widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
+    <div{% for attrname,attrvalue in widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
     {# a form item containing the field in block_prefixes is a near subform or a field directly #}
     {% if (form|length > 0 and form.parent != null)
         and 'field' not in form.vars.block_prefixes
@@ -577,14 +577,6 @@ THE SOFTWARE.
     {% endif %}
 {% endif %}
 {% endblock widget_form_group_start %}
-
-{% block help_widget_popover %}
- {% spaceless %}
- {% for attrname,attrvalue in help_widget_popover %}
- data-{{attrname}}="{{attrvalue}}"
- {% endfor %}
- {% endspaceless %}
-{% endblock help_widget_popover %}
 
 {% block widget_form_group_end %}
 {% spaceless %}
