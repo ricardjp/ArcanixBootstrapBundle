@@ -42,6 +42,15 @@ public function registerBundles() {
 }
 ```
 
+Since this bundle is an assets provider, you will need to tell assetic to include this bundle in your configuration:
+```
+# app/config/config.yml
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ArcanixBootstrapBundle ]
+```
+
 You are good to go, simple as that.
 
 # Usage
