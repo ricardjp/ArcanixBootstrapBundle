@@ -25,6 +25,7 @@ THE SOFTWARE.
 #}
 
 {% extends 'form_div_layout.html.twig' %}
+{% import _self as forms %}
 
 {% macro icon(name, inverted) %}
 <span class="glyphicon glyphicon-{{ name }}"{% if inverted|default(false) %} style="color: white;"{% endif %}></span>
@@ -43,7 +44,7 @@ THE SOFTWARE.
     {% endif %}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
     {% if icon is not empty %}
-            {{ icon(icon, icon_inverted|default(false)) }}
+            {{ forms.icon(icon, icon_inverted|default(false)) }}
     {% endif %}
     {{ label|trans({}, translation_domain) }}</button>
 {% endspaceless %}
@@ -397,7 +398,7 @@ THE SOFTWARE.
     <span class="help-block">
         <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement}}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
             {% if help_label_tooltip.icon is not sameas(false) %}
-                {{ icon(help_label_tooltip.icon) }}
+                {{ forms.icon(help_label_tooltip.icon) }}
             {% endif %}
             {% if help_label_tooltip.text is not sameas(null) %}
             {{ help_label_tooltip.text }}
@@ -410,7 +411,7 @@ THE SOFTWARE.
     <span class="help-block">
         <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement}}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}" >
             {% if help_label_popover.icon is not sameas(false) %}
-                {{ icon(help_label_popover.icon) }}
+                {{ forms.icon(help_label_popover.icon) }}
             {% endif %}
             {% if help_label_popover.text is not sameas(null) %}
             {{ help_label_popover.text }}
@@ -516,7 +517,7 @@ THE SOFTWARE.
 {% block collection_button %}
 <a {% for attrname,attrvalue in button_values.attr %} {{attrname}}="{{attrvalue}}"{% endfor %} data-collection-{{ button_type }}-btn=".{{ form.vars['id'] }}_form_group">
 {% if button_values.icon is not null %}
-    {{ icon(button_values.icon, button_values.icon_inverted|default(false)) }}
+    {{ forms.icon(button_values.icon, button_values.icon_inverted|default(false)) }}
 {% endif %}
 {{ button_values.label|trans({}, translation_domain) }}
 </a>
@@ -534,7 +535,7 @@ THE SOFTWARE.
 {% block widget_addon %}
 {% spaceless %}
 {% set widget_addon_icon = widget_addon.icon is defined ? widget_addon.icon : null  %}
-    <span class="input-group-addon">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain)|raw : icon(widget_addon_icon)) }}</span>
+    <span class="input-group-addon">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain)|raw : forms.icon(widget_addon_icon)) }}</span>
 {% endspaceless %}
 {% endblock widget_addon %}
 
