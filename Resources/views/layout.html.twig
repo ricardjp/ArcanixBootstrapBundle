@@ -10,7 +10,7 @@
 	    <title>{% block title %}{% endblock %}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            {% stylesheets '@bootstrap_less' output="css/bootstrap.css" %}
+            {% stylesheets '@bootstrap_less' output="css/bootstrap.css" combine="true" %}
                 <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
 
