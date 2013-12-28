@@ -79,6 +79,14 @@ class ArcanixBootstrapExtension extends Extension {
         			"widget_remove_btn" => "%arcanix_bootstrap.form.collection.widget_remove_btn%"))
         	->addTag("form.type_extension", array("alias" => "form"));
         
+        $container->register("arcanix_bootstrap.form.horizontal_extension", "Arcanix\BootstrapBundle\Form\Extension\HorizontalFormTypeExtension")
+            ->addArgument(array(
+                "horizontal" => "%arcanix_bootstrap.form.horizontal%",
+                "horizontal_label_class" => "%arcanix_bootstrap.form.horizontal_label_class%",
+                "horizontal_label_offset_class" => "%arcanix_bootstrap.horizontal_label_offset_class%".
+                "horizontal_input_wrapper_class" => "%arcanix_bootstrap.horizontal_input_wrapper_class%"))
+            ->addTag("form.type_extension", array("alias" => "form"));
+
         // automatically registering the lessphp filter from the Assetic Bundle
         $container->register("assetic.filter.lessphp", "Assetic\Filter\LessphpFilter")
         	->addTag("assetic.filter", array("alias" => "lessphp"))
