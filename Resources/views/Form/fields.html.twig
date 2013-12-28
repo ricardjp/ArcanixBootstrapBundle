@@ -350,7 +350,7 @@ THE SOFTWARE.
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
-    <{{ legend_tag }}>{{ label|trans({}, translation_domain) }}</{{ legend_tag }}>
+    <legend>{{ label|trans({}, translation_domain) }}</legend>
 {% endspaceless %}
 {% endblock form_legend %}
 
