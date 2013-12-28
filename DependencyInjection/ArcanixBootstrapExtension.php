@@ -71,6 +71,7 @@ class ArcanixBootstrapExtension extends Extension {
         	->addTag("form.type_extension", array("alias" => "form"));
         
         $container->register("arcanix_bootstrap.form.widget_extension", "Arcanix\BootstrapBundle\Form\Extension\WidgetFormTypeExtension")
+            ->addArgument(array("checkbox_label" => "%arcanix_bootstrap.form.checkbox_label%"))
         	->addTag("form.type_extension", array("alias" => "form"));
         
         $container->register("arcanix_bootstrap.form.widget_collection_extension", "Arcanix\BootstrapBundle\Form\Extension\WidgetCollectionFormTypeExtension")
