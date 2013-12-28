@@ -83,8 +83,8 @@ class ArcanixBootstrapExtension extends Extension {
             ->addArgument(array(
                 "horizontal" => "%arcanix_bootstrap.form.horizontal%",
                 "horizontal_label_class" => "%arcanix_bootstrap.form.horizontal_label_class%",
-                "horizontal_label_offset_class" => "%arcanix_bootstrap.horizontal_label_offset_class%",
-                "horizontal_input_wrapper_class" => "%arcanix_bootstrap.horizontal_input_wrapper_class%"))
+                "horizontal_label_offset_class" => "%arcanix_bootstrap.form.horizontal_label_offset_class%",
+                "horizontal_input_wrapper_class" => "%arcanix_bootstrap.form.horizontal_input_wrapper_class%"))
             ->addTag("form.type_extension", array("alias" => "form"));
 
         // automatically registering the lessphp filter from the Assetic Bundle
