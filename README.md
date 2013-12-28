@@ -51,6 +51,6 @@ If you want to easily use all utilities provided by this bundle, simply use the 
 ```
 {% extends 'ArcanixBootstrapBundle::layout.html.twig' %}
 
-{%block content %}
+{% block content %}
 	<p>My custom content</p>
 {% endblock %}
