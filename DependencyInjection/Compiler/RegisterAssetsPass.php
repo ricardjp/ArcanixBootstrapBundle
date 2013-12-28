@@ -73,25 +73,27 @@ class RegisterAssetsPass implements CompilerPassInterface {
 	    	->addInput($bootstrapJsDir . "/transition.js")
             ->setOutput("js/bootstrap.js");
 
-/*
-        $bootstrapIconsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/img";
-        $bootstrapIcons = AssetConfiguration::create("bootstrap_icons")
-            ->addInput($bootstrapIconsDir . "/glyphicons-halflings.png")
-            ->setOutput("img/glyphicons-halflings.png");
+        $bootstrapIconsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/fonts";
+        $bootstrapIconsRegularEot = AssetConfiguration::create("bootstrap_icons_eot")
+            ->addInput($bootstrapIconsDir . "/glyphicons-halflings-regular.eot")
+            ->setOutput("fonts/glyphicons-halflings-regular.eot");
 
-        $bootstrapIconsWhite = AssetConfiguration::create("bootstrap_icons_white")
-            ->addInput($bootstrapIconsDir . "/glyphicons-halflings-white.png")
-            ->setOutput("img/glyphicons-halflings-white.png");*/
+        $bootstrapIconsRegularSvg = AssetConfiguration::create("bootstrap_icons_svg")
+            ->addInput($bootstrapIconsDir . "/glyphicons-halflings-regular.svg")
+            ->setOutput("fonts/glyphicons-halflings-regular.svg");
+
+        $bootstrapIconsRegularTtf = AssetConfiguration::create("bootstrap_icons_ttf")
+            ->addInput($bootstrapIconsDir . "/glyphicons-halflings-regular.ttf")
+            ->setOutput("fonts/glyphicons-halflings-regular.ttf");
+
+        $bootstrapIconsRegularWoff = AssetConfiguration::create("bootstrap_icons_woff")
+            ->addInput($bootstrapIconsDir . "/glyphicons-halflings-regular.woff")
+            ->setOutput("fonts/glyphicons-halflings-regular.woff");
 
         $bootstrapLess = AssetConfiguration::create("bootstrap_less")
             ->addInput($kernelRootDir . "/../vendor/twitter/bootstrap/less/bootstrap.less")
             ->addFilter("lessphp")
             ->setOutput("css/bootstrap.css");
-
-        /*$bootstrapResponsiveLess = AssetConfiguration::create("bootstrap_responsive_less")
-            ->addInput($kernelRootDir . "/../vendor/twitter/bootstrap/less/responsive.less")
-            ->addFilter("lessphp")
-            ->setOutput("css/bootstrap-responsive.css");*/
 
         $container->getDefinition("assetic.filter.lessphp")->setFile($kernelRootDir . "/../vendor/leafo/lessphp/lessc.inc.php");
 
@@ -110,10 +112,11 @@ class RegisterAssetsPass implements CompilerPassInterface {
         $this->register($assetManager, $jQueryUIJs);
         $this->register($assetManager, $jQueryUIi18nJs);
         $this->register($assetManager, $bootstrapJs);
-        //$this->register($assetManager, $bootstrapIcons);
-        //$this->register($assetManager, $bootstrapIconsWhite);
+        $this->register($assetManager, $bootstrapIconsRegularEot);
+        $this->register($assetManager, $bootstrapIconsRegularSvg);
+        $this->register($assetManager, $bootstrapIconsRegularTtf);
+        $this->register($assetManager, $bootstrapIconsRegularWoff);
         $this->register($assetManager, $bootstrapLess);
-        //$this->register($assetManager, $bootstrapResponsiveLess);
 
         // registering form fields
         $container->setParameter('twig.form.resources', array('ArcanixBootstrapBundle:Form:fields.html.twig'));
