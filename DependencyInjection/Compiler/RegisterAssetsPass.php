@@ -71,7 +71,6 @@ class RegisterAssetsPass implements CompilerPassInterface {
 	    	->addInput($bootstrapJsDir . "/scrollspy.js")
 	    	->addInput($bootstrapJsDir . "/tab.js")
 	    	->addInput($bootstrapJsDir . "/transition.js")
-	    	->addInput($bootstrapJsDir . "/typeahead.js")
             ->setOutput("js/bootstrap.js");
 
 /*
