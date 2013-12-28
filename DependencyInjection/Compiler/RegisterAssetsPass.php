@@ -59,21 +59,22 @@ class RegisterAssetsPass implements CompilerPassInterface {
         $bootstrapJsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/js";
 
         $bootstrapJs = AssetConfiguration::create("bootstrap_js")
-			->addInput($bootstrapJsDir . "/bootstrap-affix.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-alert.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-button.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-carousel.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-collapse.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-dropdown.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-modal.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-tooltip.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-popover.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-scrollspy.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-tab.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-transition.js")
-	    	->addInput($bootstrapJsDir . "/bootstrap-typeahead.js")
+			->addInput($bootstrapJsDir . "/affix.js")
+	    	->addInput($bootstrapJsDir . "/alert.js")
+	    	->addInput($bootstrapJsDir . "/button.js")
+	    	->addInput($bootstrapJsDir . "/carousel.js")
+	    	->addInput($bootstrapJsDir . "/collapse.js")
+	    	->addInput($bootstrapJsDir . "/dropdown.js")
+	    	->addInput($bootstrapJsDir . "/modal.js")
+	    	->addInput($bootstrapJsDir . "/tooltip.js")
+	    	->addInput($bootstrapJsDir . "/popover.js")
+	    	->addInput($bootstrapJsDir . "/scrollspy.js")
+	    	->addInput($bootstrapJsDir . "/tab.js")
+	    	->addInput($bootstrapJsDir . "/transition.js")
+	    	->addInput($bootstrapJsDir . "/typeahead.js")
             ->setOutput("js/bootstrap.js");
 
+/*
         $bootstrapIconsDir = $kernelRootDir . "/../vendor/" . static::BOOTSTRAP_PATH . "/img";
         $bootstrapIcons = AssetConfiguration::create("bootstrap_icons")
             ->addInput($bootstrapIconsDir . "/glyphicons-halflings.png")
@@ -81,17 +82,17 @@ class RegisterAssetsPass implements CompilerPassInterface {
 
         $bootstrapIconsWhite = AssetConfiguration::create("bootstrap_icons_white")
             ->addInput($bootstrapIconsDir . "/glyphicons-halflings-white.png")
-            ->setOutput("img/glyphicons-halflings-white.png");
+            ->setOutput("img/glyphicons-halflings-white.png");*/
 
         $bootstrapLess = AssetConfiguration::create("bootstrap_less")
             ->addInput($kernelRootDir . "/../vendor/twitter/bootstrap/less/bootstrap.less")
             ->addFilter("lessphp")
             ->setOutput("css/bootstrap.css");
 
-        $bootstrapResponsiveLess = AssetConfiguration::create("bootstrap_responsive_less")
+        /*$bootstrapResponsiveLess = AssetConfiguration::create("bootstrap_responsive_less")
             ->addInput($kernelRootDir . "/../vendor/twitter/bootstrap/less/responsive.less")
             ->addFilter("lessphp")
-            ->setOutput("css/bootstrap-responsive.css");
+            ->setOutput("css/bootstrap-responsive.css");*/
 
         $container->getDefinition("assetic.filter.lessphp")->setFile($kernelRootDir . "/../vendor/leafo/lessphp/lessc.inc.php");
 
@@ -110,10 +111,10 @@ class RegisterAssetsPass implements CompilerPassInterface {
         $this->register($assetManager, $jQueryUIJs);
         $this->register($assetManager, $jQueryUIi18nJs);
         $this->register($assetManager, $bootstrapJs);
-        $this->register($assetManager, $bootstrapIcons);
-        $this->register($assetManager, $bootstrapIconsWhite);
+        //$this->register($assetManager, $bootstrapIcons);
+        //$this->register($assetManager, $bootstrapIconsWhite);
         $this->register($assetManager, $bootstrapLess);
-        $this->register($assetManager, $bootstrapResponsiveLess);
+        //$this->register($assetManager, $bootstrapResponsiveLess);
 
         // registering form fields
         $container->setParameter('twig.form.resources', array('ArcanixBootstrapBundle:Form:fields.html.twig'));
