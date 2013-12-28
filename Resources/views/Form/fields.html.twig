@@ -103,16 +103,7 @@ THE SOFTWARE.
         {% if show_legend %}{{ block('form_legend') }}{% endif %}
     {% endif %}
 
-    {% if form.vars.tabbed %}
-        {{ form_tabs(form) }}
-        <div class="tab-content">
-    {% endif %}
-
     {{ block('form_rows_visible') }}
-
-    {% if form.vars.tabbed %}
-        </div>
-    {% endif %}
 
     {{ form_rest(form) }}
 
