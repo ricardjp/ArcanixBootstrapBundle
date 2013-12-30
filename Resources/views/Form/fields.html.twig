@@ -55,17 +55,13 @@ THE SOFTWARE.
 {% block choice_widget_collapsed %}
     {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ widget_form_control_class}) %}
     {{ parent() }}
-    {% if horizontal %}
-        {{ block('form_message') }}
-    {% endif %}
+    {{ block('form_message') }}
 {% endblock choice_widget_collapsed %}
 
 {% block textarea_widget %}
 {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ widget_form_control_class}) %}
     {{ parent() }}
-    {% if horizontal %}
-            {{ block('form_message') }}
-    {% endif %}
+    {{ block('form_message') }}
 {% endblock textarea_widget %}
 
 {% block form_widget_simple %}
@@ -90,7 +86,7 @@ THE SOFTWARE.
         {% endif %}
     </div>
     {% endif %}
-    {% if type != 'hidden' and horizontal %}
+    {% if type != 'hidden' %}
         {{ block('form_message') }}
     {% endif %}
 {% endspaceless %}
@@ -173,7 +169,7 @@ THE SOFTWARE.
         <div class="{{ multiple ? 'checkbox' : 'radio' }}">
         {% endif %}
             <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ form_widget(child, {'horizontal_label_class': horizontal_label_class, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
+                {{ form_widget(child, {'horizontal_label_class': 'col-lg-3', 'horizontal_input_wrapper_class': horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
                 {{ child.vars.label|trans({}, translation_domain) }}
             </label>
         {% if widget_type != 'inline' %}
@@ -196,7 +192,7 @@ THE SOFTWARE.
 {% endif %}
 
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    <label {% if not horizontal %}class="checkbox-inline"{% endif %}>
+    <label>
 {% endif %}
         <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
@@ -318,9 +314,7 @@ THE SOFTWARE.
         {{ block('widget_addon') }}
     {% endif %}
 {% endif %}
-    {% if horizontal %}
-        {{ block('form_message') }}
-    {% endif %}
+    {{ block('form_message') }}
 {% endspaceless %}
 {% endblock file_widget %}
 
@@ -337,9 +331,7 @@ THE SOFTWARE.
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
         {% set label_attr_class = '' %}
-        {% if horizontal %}
-            {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
-        {% endif %}
+        {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
         <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
         {{ label|trans({}, translation_domain) }}
