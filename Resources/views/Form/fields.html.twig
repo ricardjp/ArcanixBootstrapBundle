@@ -98,18 +98,8 @@ THE SOFTWARE.
 
 {% block form_widget_compound %}
 {% spaceless %}
-    {% if form.parent == null %}
-        {% if render_fieldset %}<fieldset>{% endif %}
-        {% if show_legend %}{{ block('form_legend') }}{% endif %}
-    {% endif %}
-
     {{ block('form_rows_visible') }}
-
     {{ form_rest(form) }}
-
-    {% if form.parent == null %}
-        {% if render_fieldset %}</fieldset>{% endif %}
-    {% endif %}
 {% endspaceless %}
 {% endblock form_widget_compound %}
 
@@ -336,15 +326,6 @@ THE SOFTWARE.
 
 {# Labels #}
 
-{% block form_legend %}
-{% spaceless %}
-    {% if label is empty %}
-        {% set label = name|humanize %}
-    {% endif %}
-    <legend>{{ label|trans({}, translation_domain) }}</legend>
-{% endspaceless %}
-{% endblock form_legend %}
-
 {% block form_label %}
 {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
 {% spaceless %}
@@ -560,9 +541,7 @@ THE SOFTWARE.
     {% if (form|length > 0 and form.parent != null)
         and 'field' not in form.vars.block_prefixes
         and 'date' not in form.vars.block_prefixes %}
-        {% if show_child_legend%}
-            {{ block('form_legend') }}
-        {% elseif label_render %}
+        {% if label_render %}
             {{ form_label(form, label|default(null)) }}
         {% else %}
         {% endif %}

@@ -57,15 +57,6 @@ class ArcanixBootstrapExtension extends Extension {
         $container->register("arcanix_bootstrap.form.help_extension", "Arcanix\BootstrapBundle\Form\Extension\HelpFormTypeExtension")
         	->addTag("form.type_extension", array("alias" => "form"));
         
-        $container->register("arcanix_bootstrap.form.legend_extension", "Arcanix\BootstrapBundle\Form\Extension\LegendFormTypeExtension")
-        	->addArgument(array(
-        		"render_fieldset" => "%arcanix_bootstrap.form.render_fieldset%",
-        		"show_legend" => "%arcanix_bootstrap.form.show_legend%",
-        		"show_child_legend" => "%arcanix_bootstrap.form.show_child_legend%",
-        		"render_required_asterisk" => "%arcanix_bootstrap.form.render_required_asterisk%",
-        		"render_optional_text" => "%arcanix_bootstrap.form.render_optional_text%"))
-        	->addTag("form.type_extension", array("alias" => "form"));
-        
         $container->register("arcanix_bootstrap.form.error_type_extension", "Arcanix\BootstrapBundle\Form\Extension\ErrorTypeFormTypeExtension")
         	->addArgument(array("error_type" => "%arcanix_bootstrap.form.error_type%"))
         	->addTag("form.type_extension", array("alias" => "form"));
