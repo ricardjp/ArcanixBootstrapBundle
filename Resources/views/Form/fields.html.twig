@@ -369,7 +369,7 @@ THE SOFTWARE.
     {% else %}
         {{ block('widget_form_group_start') }}
 
-        {% set show_horizontal_wrapper = horizontal and not (form.parent is not null and 'collection' in form.parent.vars.block_prefixes) %}
+        {% set show_horizontal_wrapper = not (form.parent is not null and 'collection' in form.parent.vars.block_prefixes) %}
 
         {% if show_horizontal_wrapper %}
         <div class="col-lg-9">
