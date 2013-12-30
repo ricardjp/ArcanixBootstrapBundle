@@ -453,9 +453,7 @@ THE SOFTWARE.
 
 {% block label_asterisk %}
 {% if required %}
-    {%- if render_required_asterisk %} <span class="asterisk">*</span>{% endif %}
-{% else %}
-    {%- if render_optional_text %} <span>{{ "(optional)"|trans({}, translation_domain) }}</span>{% endif %}
+    <span class="asterisk">*</span>
 {% endif %}
 {% endblock label_asterisk %}
 
