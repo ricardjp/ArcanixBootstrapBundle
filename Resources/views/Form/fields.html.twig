@@ -195,12 +195,12 @@ THE SOFTWARE.
     <div class="checkbox">
 {% endif %}
 
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes and label_render %}
+{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
     <label {% if not horizontal %}class="checkbox-inline"{% endif %}>
 {% endif %}
         <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    {% if label_render and widget_checkbox_label in ['both', 'widget'] %}
+    {% if widget_checkbox_label in ['both', 'widget'] %}
         {{ label|trans({}, translation_domain) }}
     </label>
     {% endif %}
@@ -379,10 +379,6 @@ THE SOFTWARE.
 
         {% set show_horizontal_wrapper = horizontal and not (form.parent is not null and 'collection' in form.parent.vars.block_prefixes) %}
 
-        {% if horizontal and not label_render %}
-            {% set horizontal_input_wrapper_class = horizontal_input_wrapper_class ~ ' ' ~ horizontal_label_offset_class %}
-        {% endif %}
-
         {% if show_horizontal_wrapper %}
         <div class="{{ horizontal_input_wrapper_class }}">
         {% endif %}
@@ -538,22 +534,14 @@ THE SOFTWARE.
     {% endif %}
     <div{% for attrname,attrvalue in widget_form_group_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
     {# a form item containing the field in block_prefixes is a near subform or a field directly #}
-    {% if (form|length > 0 and form.parent != null)
-        and 'field' not in form.vars.block_prefixes
-        and 'date' not in form.vars.block_prefixes %}
-        {% if label_render %}
-            {{ form_label(form, label|default(null)) }}
-        {% else %}
+    {% if (form|length > 0 and form.parent != null) and 'field' not in form.vars.block_prefixes and 'date' not in form.vars.block_prefixes %}
+        {{ form_label(form, label|default(null)) }}
         {% endif %}
     {% else %}
-        {% if label_render %}
-            {{ form_label(form, label|default(null)) }}
-        {% endif %}
-    {% endif %}
-{% else %}
-    {% if label_render %}
         {{ form_label(form, label|default(null)) }}
     {% endif %}
+{% else %}
+    {{ form_label(form, label|default(null)) }}
 {% endif %}
 {% endblock widget_form_group_start %}
 
