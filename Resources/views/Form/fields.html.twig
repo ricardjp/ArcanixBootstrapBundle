@@ -162,14 +162,14 @@ THE SOFTWARE.
     {% set label_attr = label_attr|merge({'class': (label_attr.class|default(''))}) %}
     {% set label_attr = label_attr|merge({'class': (label_attr.class ~ ' ' ~ (widget_type != '' ? (multiple ? 'checkbox' : 'radio') ~ '-' ~ widget_type : ''))}) %}
     {% if expanded %}
-        {% set attr = attr|merge({'class': attr.class|default(horizontal_input_wrapper_class)}) %}
+        {% set attr = attr|merge({'class': attr.class|default('col-lg-9')}) %}
     {% endif %}
     {% for child in form %}
         {% if widget_type != 'inline' %}
         <div class="{{ multiple ? 'checkbox' : 'radio' }}">
         {% endif %}
             <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ form_widget(child, {'horizontal_label_class': 'col-lg-3', 'horizontal_input_wrapper_class': horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
+                {{ form_widget(child, {'horizontal_label_class': 'col-lg-3', 'horizontal_input_wrapper_class': 'col-lg-9', 'attr': {'class': attr.widget_class|default('')}}) }}
                 {{ child.vars.label|trans({}, translation_domain) }}
             </label>
         {% if widget_type != 'inline' %}
@@ -224,9 +224,9 @@ THE SOFTWARE.
     {% set attr = attr|merge({'class': attr.class|default('inline')}) %}
         <div class="row">
         {{ date_pattern|replace({
-            '{{ year }}':  form_widget(form.year, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-3')}),
-            '{{ month }}': form_widget(form.month, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-3')}),
-            '{{ day }}':   form_widget(form.day, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-3')}),
+            '{{ year }}':  form_widget(form.year, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-3')}),
+            '{{ month }}': form_widget(form.month, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-3')}),
+            '{{ day }}':   form_widget(form.day, {'attr': {'class': attr.widget_class|default('') ~ ''}, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-3')}),
         })|raw }}
         </div>
     {{ block('form_message') }}
@@ -249,10 +249,10 @@ THE SOFTWARE.
 {% else %}
     {% set attr = attr|merge({'class': attr.class|default('')}) %}
     {% spaceless %}
-    {{ form_widget(form.hour, { 'attr': {  'size': '1'}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-2')}) }}
-    {{ form_widget(form.minute, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-2')}) }}
+    {{ form_widget(form.hour, { 'attr': {  'size': '1'}, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-2')}) }}
+    {{ form_widget(form.minute, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-2')}) }}
     {% if with_seconds %}
-        :{{ form_widget(form.second, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-2') }) }}
+        :{{ form_widget(form.second, { 'attr': { 'size': '1' }, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-2') }) }}
     {% endif %}
     {% endspaceless %}
     {{ block('form_message') }}
@@ -277,8 +277,8 @@ THE SOFTWARE.
             <div {{ block('widget_container_attributes') }}>
                 {{ form_errors(form.date) }}
                 {{ form_errors(form.time) }}
-                {{ form_widget(form.date, {'attr': {'class': attr.widget_class|default('')}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-3')}) }}
-                {{ form_widget(form.time, {'attr': {'class': attr.widget_class|default('')}, 'horizontal_input_wrapper_class': horizontal_input_wrapper_class|default('col-lg-2')}) }}
+                {{ form_widget(form.date, {'attr': {'class': attr.widget_class|default('')}, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-3')}) }}
+                {{ form_widget(form.time, {'attr': {'class': attr.widget_class|default('')}, 'horizontal_input_wrapper_class': 'col-lg-9'|default('col-lg-2')}) }}
                 {{ block('form_message') }}
             </div>
     {% endif %}
@@ -331,7 +331,7 @@ THE SOFTWARE.
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
         {% set label_attr_class = '' %}
-        {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
+        {% set label_attr_class = 'control-label ' ~ label_attr_class ~ 'col-lg-3' %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
         <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
         {{ label|trans({}, translation_domain) }}
@@ -372,7 +372,7 @@ THE SOFTWARE.
         {% set show_horizontal_wrapper = horizontal and not (form.parent is not null and 'collection' in form.parent.vars.block_prefixes) %}
 
         {% if show_horizontal_wrapper %}
-        <div class="{{ horizontal_input_wrapper_class }}">
+        <div class="col-lg-9">
         {% endif %}
         {{ widget_prefix|trans({}, translation_domain)|raw }} {{ form_widget(form, _context) }} {{ widget_suffix|trans({}, translation_domain)|raw }}
 
