@@ -536,7 +536,6 @@ THE SOFTWARE.
     {# a form item containing the field in block_prefixes is a near subform or a field directly #}
     {% if (form|length > 0 and form.parent != null) and 'field' not in form.vars.block_prefixes and 'date' not in form.vars.block_prefixes %}
         {{ form_label(form, label|default(null)) }}
-        {% endif %}
     {% else %}
         {{ form_label(form, label|default(null)) }}
     {% endif %}
