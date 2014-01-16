@@ -63,3 +63,25 @@ If you want to easily use all utilities provided by this bundle, simply use the 
 {% block content %}
 	<p>My custom content</p>
 {% endblock %}
+```
+
+## Twig functions
+### Icon
+To display an icon, please use the "icon" function. Available icons are listed [on the official Twitter Bootstrap website](http://getbootstrap.com/components/#glyphicons)
+```
+{{ icon("search") }}
+```
+
+## Form extensions
+### Legend
+If you wish to attach a form legend to a form, simply set the "legend" option:
+```
+public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    	$resolver->setDefaults(array(
+        'legend' => 'my.form.legend',
+    ));
+}
+```
+Value for "legend" will be automatically translated if i18n is activated for your application.
+
+If "legend" is not set in the form options, no &lt;legend&gt; tag will be rendered.

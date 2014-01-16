@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2013 Jean-Philippe Ricard.
+ * Copyright (C) 2014 Jean-Philippe Ricard.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,7 @@
 
 namespace Arcanix\BootstrapBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -30,51 +27,37 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class ArcanixBootstrapExtension extends Extension {
 	
     /**
-     * {@inheritDoc}
+     * Registering form extensions.
      */
     public function load(array $configs, ContainerBuilder $container) {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $container->register(
+                "arcanix_bootstrap.form.layout_extension",
+                "Arcanix\BootstrapBundle\Form\Extension\LayoutFormTypeExtension")
+                ->addTag("form.type_extension", array("alias" => "form"));
         
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('twig.xml');
+        $container->register(
+                "arcanix_bootstrap.form.help_extension",
+                "Arcanix\BootstrapBundle\Form\Extension\HelpFormTypeExtension")
+        	->addTag("form.type_extension", array("alias" => "form"));
+        
+        $container->register(
+                "arcanix_bootstrap.form.legend_extension",
+                "Arcanix\BootstrapBundle\Form\Extension\LegendFormTypeExtension")
+                ->addTag("form.type_extension", array("alias" => "form"));
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__."/../Resources/config"));
+        $container->register(
+                "arcanix_bootstrap.form.append_prepend_extension",
+                "Arcanix\BootstrapBundle\Form\Extension\PrependAndAppendInputFormTypeExtension")
+                ->addTag("form.type_extension", array("alias" => "form"));
         
-        if (isset($config['form'])) {
-        	foreach ($config['form'] as $key => $value) {
-        		if (is_array($value)) {
-        			foreach ($config['form'][$key] as $subkey => $subvalue) {
-        				$container->setParameter('arcanix_bootstrap.form.'.$key.'.'.$subkey, $subvalue);
-        			}
-        		} else {
-        			$container->setParameter('arcanix_bootstrap.form.'.$key, $value);
-        		}
-        	}
-        }
-        
-        // registering form extensions
-        $container->register("arcanix_bootstrap.form.help_extension", "Arcanix\BootstrapBundle\Form\Extension\HelpFormTypeExtension")
-        	->addTag("form.type_extension", array("alias" => "form"));
-        
-        $container->register("arcanix_bootstrap.form.error_type_extension", "Arcanix\BootstrapBundle\Form\Extension\ErrorTypeFormTypeExtension")
-        	->addArgument(array("error_type" => "%arcanix_bootstrap.form.error_type%"))
-        	->addTag("form.type_extension", array("alias" => "form"));
-        
-        $container->register("arcanix_bootstrap.form.widget_extension", "Arcanix\BootstrapBundle\Form\Extension\WidgetFormTypeExtension")
-            ->addArgument(array("checkbox_label" => "%arcanix_bootstrap.form.checkbox_label%"))
-        	->addTag("form.type_extension", array("alias" => "form"));
-        
-        $container->register("arcanix_bootstrap.form.widget_collection_extension", "Arcanix\BootstrapBundle\Form\Extension\WidgetCollectionFormTypeExtension")
-        	->addArgument(array(
-        			"widget_add_btn" => "%arcanix_bootstrap.form.collection.widget_add_btn%",
-        			"widget_remove_btn" => "%arcanix_bootstrap.form.collection.widget_remove_btn%"))
-        	->addTag("form.type_extension", array("alias" => "form"));
+        $container->register(
+                "arcanix_bootstrap.form.collection_extension",
+                "Arcanix\BootstrapBundle\Form\Extension\CollectionFormTypeExtension")
+                ->addTag("form.type_extension", array("alias" => "form"));
 
-        // automatically registering the lessphp filter from the Assetic Bundle
-        $container->register("assetic.filter.lessphp", "Assetic\Filter\LessphpFilter")
-        	->addTag("assetic.filter", array("alias" => "lessphp"))
-        	->addMethodCall("setPresets", array(array()));
-        
+        $container->register(
+                'arcanix.twig.arcanix_bootstrap_extension',
+                "Arcanix\BootstrapBundle\Twig\ArcanixBootstrapExtension")
+                ->addTag('twig.extension');
     }
 }

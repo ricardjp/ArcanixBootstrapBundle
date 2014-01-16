@@ -2,6 +2,7 @@
     "name": "arcanix/bootstrap-bundle",
     "type": "symfony-bundle",
     "description": "Twitter Bootstrap Symfony 2 bundle",
+    "version": "dev-master",
     "autoload": {
         "psr-0": { "Arcanix\\BootstrapBundle": "" }
     },
@@ -9,9 +10,9 @@
     "require": {
         "symfony/symfony": "2.4.*",
         "symfony/assetic-bundle": "~2.3",
-        "twitter/bootstrap": "3.0.0",
-        "sonata-project/jquery-bundle": "1.9.*",
-        "leafo/lessphp": "0.4.*"
+        "robloach/component-installer": "*",
+        "components/bootstrap": ">=3.0, <4.0",
+        "components/jquery": ">1.9"
     },
     "minimum-stability": "stable"
 }

@@ -18,24 +18,26 @@
 
 namespace Arcanix\BootstrapBundle\Form\Extension;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class HelpFormTypeExtension extends AbstractTypeExtension {
+class LegendFormTypeExtension extends AbstractTypeExtension {
     
     public function buildView(FormView $view, FormInterface $form, array $options) {
-        $view->vars['help'] = $options['help'];
+        $view->vars["legend"] = $options["legend"];
     }
-
+    
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'help' => null,
+            "legend" => null,
         ));
     }
     
     public function getExtendedType() {
-        return 'form';
+        return "form";
     }
+    
 }
+
